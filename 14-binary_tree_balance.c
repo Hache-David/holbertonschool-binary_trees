@@ -10,28 +10,19 @@
 
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	int balance_factor = 0;
-	const binary_tree_t *tree_save;
+	int height_left = 0, height_right = 0;
 
 	if (tree == NULL)
-	{
 		return (0);
-	}
-	tree_save = malloc(sizeof(binary_tree_t));
-	tree_save = tree;
-	if (tree_save == NULL)
+
+	if (tree->left != NULL)
 	{
-		return (0);
+		height_left = 1 + binary_tree_balance(tree->left);
 	}
-	while (tree_save->right != NULL)
+	if (tree->right != NULL)
 	{
-		balance_factor -= 1;
-		tree_save = tree_save->right;
+		height_right = 1 + binary_tree_balance(tree->right);
 	}
-	while (tree->left != NULL)
-	{
-		balance_factor += 1;
-		tree = tree->left;
-	}
-	return (balance_factor);
+	return (height_left - height_right);
 }
+
