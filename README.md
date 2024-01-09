@@ -30,7 +30,6 @@ Un arbre binaire est une structure de données dans laquelle chaque nœud a au m
 
 Pour utiliser ce projet, clonez le dépôt et compilez les fichiers avec un compilateur C standard comme `gcc`.
 
-```bash
 gcc -Wall -Wextra -Werror -pedantic *.c -o binary_trees
 
 ## Authors
