@@ -1,62 +1,20 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "binary_trees.h"
 
 /**
+ * binary_tree_uncle - finds the uncle of a node
+ * @node: pointer to the node to find the uncle of
  *
- *
+ * Return: pointer to the uncle node, or NULL if node is NULL or has no uncle
  */
-
-struct Node
+binary_tree_t *binary_tree_uncle(binary_tree_t *node)
 {
-	int data;
-	struct Node *left, *right;
-};
-
-struct Node* newNode(int data)
-{
-	struct Node *node = (struct Node*)malloc(sizeof(struct Node));
-	node->data = data;
-	node->left = node->right = NULL;
-	return (node);
-}
-
-struct Node* binary_tree_uncle(struct Node *node)
-{
-	if (node->left == NULL && node->right == NULL)
-	{
+	if (node == NULL || node->parent == NULL || node->parent->parent == NULL)
 		return (NULL);
-	}
-	
-	if (node->parent == NULL)
-	{
-		return (NULL);
-	}
-	
-	if (node->parent->left == node)
-	{
-		return (node->parent->right);
-	}
+
+	binary_tree_t *grandparent = node->parent->parent;
+
+	if (node->parent == grandparent->left)
+		return (grandparent->right);
 	else
-	{
-		return (node->parent->left);
-	}
-}
-
-int main()
-{
-	struct Node *root = newNode(1);
-	root->left = newNode(2);
-	root->right = newNode(3);
-	root->left->left = newNode(4);
-	root->left->right = newNode(5);
-	root->right->left = newNode(6);
-	root->right->right = newNode(7);
-	
-	struct Node *uncle = binary_tree_uncle(root->left);
-	printf("L'oncle du nœud 2 est : %d\n", uncle->data);
-	uncle = binary_tree_uncle(root->left->right);
-	printf("L'oncle du nœud 5 est : %d\n", uncle->data);
-	
-	return (0);
+		return (grandparent->left);
 }
