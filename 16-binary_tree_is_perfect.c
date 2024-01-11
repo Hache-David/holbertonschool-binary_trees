@@ -6,39 +6,44 @@
  *
  * Return: 1 if the tree is perfect, 0 otherwise
  */
+
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	size_t left_height, right_height;
+	int height, count_node;
 
 	if (tree == NULL)
 		return (0);
 
-	left_height = binary_tree_height(tree->left);
-	right_height = binary_tree_height(tree->right);
+	height = binary_tree_height(tree);
+	count_node = binary_tree_size(tree);
 
-	if (left_height == right_height)
-		return (binary_tree_is_full(tree));
-
-	return (0);
+	return (count_node == (1 << height) - 1);
 }
 
 /**
- * binary_tree_is_full - Vérifie si un arbre binaire est complet
- * @tree: Pointeur vers le nœud racine de l'arbre à vérifier
- * Return: 1 si l'arbre est complet, sinon 0
+ * binary_tree_size - Measures the size of a binary tree
+ * @tree: pointer to the root node of the tree to measure the size
+ *
+ * Return: The size of the tree. If tree is NULL, returns 0.
+ *
+ * Description: This function calculates the size of a binary tree, which
+ * is the total number of nodes in the tree. It uses recursion to count
+ * the nodes in both the left and right subtrees.
  */
-int binary_tree_is_full(const binary_tree_t *tree)
+
+size_t binary_tree_size(const binary_tree_t *tree)
 {
+	size_t size_left, size_right;
+
 	if (tree == NULL)
-		return (1);
+	{
+		return (0);
+	}
 
-	if (tree->left == NULL && tree->right == NULL)
-		return (1);
+	size_left = binary_tree_size(tree->left);
+	size_right = binary_tree_size(tree->right);
 
-	if (tree->left != NULL && tree->right != NULL)
-		return (binary_tree_is_full(tree->left) && binary_tree_is_full(tree->right));
-
-	return (0);
+	return (1 + size_left + size_right);
 }
 
 /**
